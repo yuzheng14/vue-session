@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "dist/typing"
+    "declarationDir": "dist/typings"
   },
   "include": ["src"]
 }
