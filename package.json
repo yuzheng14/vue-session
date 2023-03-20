@@ -2,13 +2,22 @@
   "name": "vue-session",
   "version": "0.9.9",
   "description": "A simplistic session plugin for VueJS backed by SessionStorage",
-  "main": "index.js",
-  "unpkg": "index.unpkg.js",
-  "esm": "index.esm.js",
+  "main": "./dist/lib/index.cjs",
+  "module": "./dist/es/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.cjs"
+    }
+  },
+  "typings": "./dist/typings/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "pnpm jest && rm -rf dist && rollup -c && tsc -p tsconfig.type.json"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/victorsferreira/vue-session"
