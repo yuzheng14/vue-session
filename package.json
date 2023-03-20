@@ -6,7 +6,8 @@
   "unpkg": "index.unpkg.js",
   "esm": "index.esm.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist & rollup -c & tsc -p tsconfig.type.json"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,21 @@
     "vue-plugin"
   ],
   "author": "Victor Ferreira <feinfadiges@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.7.14"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.3",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.4",
+    "rollup": "^3.20.0",
+    "ts-jest": "^29.0.5",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.2"
+  },
+  "type": "module"
 }
