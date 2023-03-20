@@ -6,8 +6,8 @@
   "unpkg": "index.unpkg.js",
   "esm": "index.esm.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist & rollup -c & tsc -p tsconfig.type.json"
+    "test": "jest",
+    "build": "pnpm jest && rm -rf dist && rollup -c && tsc -p tsconfig.type.json"
   },
   "repository": {
     "type": "git",
