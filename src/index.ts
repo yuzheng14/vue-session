@@ -48,6 +48,10 @@ export interface VueSession {
    */
   flash_key: 'vue-session-flash-key'
   /**
+   * key of id
+   */
+  id_key: 'session-id'
+  /**
    * used storage (localStorage for persist, otherwise sessionStorage)
    */
   storage: Storage
@@ -55,17 +59,14 @@ export interface VueSession {
    * set All data in storage
    * @param all all data to be set
    */
-  setAll<T>(all: T): void
+  setAll<T extends Record<PropertyKey, any>>(all: T): void
   /**
    * get all data
    * @returns all data in storage
    */
-  getAll<
-    T extends {
-      'vue-session-flash-key': Record<PropertyKey, any>
-      [key: PropertyKey]: any
-    }
-  >(): T
+  getAll<T extends Record<PropertyKey, any>, D extends Record<PropertyKey, any> = any>(): T & {
+    ['vue-session-flash-key']: D
+  }
   /**
    * flash storage instance, it will delete the data once read it
    */
@@ -130,8 +131,11 @@ export function getVueSession(options?: VueSessionOptions): VueSession {
   const vueSession: VueSession = {
     key: 'vue-session-key',
     flash_key: 'vue-session-flash-key',
+    id_key: 'session-id',
     storage: options?.persist ? window.localStorage : window.sessionStorage,
     setAll(all) {
+      // if there is no `flash` data in all data, then set it
+      all[this.flash_key] || ((all as Record<PropertyKey, any>)[this.flash_key] = {})
       this.storage.setItem(this.key, JSON.stringify(all))
     },
     getAll() {
@@ -167,12 +171,12 @@ export function getVueSession(options?: VueSessionOptions): VueSession {
     },
     set(key, value) {
       // avoid key conflict
-      if (key === 'session-id') return
+      if (key === this.id_key) return
 
       // get all data
       let all = this.getAll()
       // if `session-id` is not in all data, then call start to add it
-      if (!('session-id' in all)) {
+      if (!(this.id_key in all)) {
         this.start()
         all = this.getAll()
       }
@@ -186,16 +190,16 @@ export function getVueSession(options?: VueSessionOptions): VueSession {
     },
     start() {
       const all = this.getAll()
-      all['session-id'] = 'sess:' + Date.now()
+      all[this.id_key] = 'sess:' + Date.now()
       this.setAll(all)
     },
     renew(sessionId) {
       var all = this.getAll()
-      all['session-id'] = 'sess:' + sessionId
+      all[this.id_key] = 'sess:' + sessionId
       this.setAll(all)
     },
     exists() {
-      return 'session-id' in this.getAll()
+      return this.id_key in this.getAll()
     },
     has(key) {
       return key in this.getAll()
@@ -208,13 +212,13 @@ export function getVueSession(options?: VueSessionOptions): VueSession {
     },
     clear() {
       const all = this.getAll()
-      this.setAll({ 'session-id': all['session-id'], [this.flash_key]: {} })
+      this.setAll({ [this.id_key]: all[this.id_key], [this.flash_key]: {} })
     },
     destroy() {
       this.setAll({ [this.flash_key]: {} })
     },
     id() {
-      return this.get('session-id')
+      return this.get(this.id_key)
     },
   }
   return vueSession
