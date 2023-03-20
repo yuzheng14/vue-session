@@ -1,5 +1,5 @@
 {
-  "name": "vue-session",
+  "name": "@yuzheng14/vue-session",
   "version": "0.9.9",
   "description": "A simplistic session plugin for VueJS backed by SessionStorage",
   "main": "./dist/lib/index.cjs",
@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/victorsferreira/vue-session"
+    "url": "https://github.com/yuzheng14/vue-session"
   },
   "keywords": [
     "vue",
@@ -29,7 +29,7 @@
     "plugin",
     "vue-plugin"
   ],
-  "author": "Victor Ferreira <feinfadiges@gmail.com>",
+  "author": "yuzheng14 <me@yuzheng14.com>",
   "license": "ISC",
   "dependencies": {
     "vue": "^2.7.14"
