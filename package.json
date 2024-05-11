@@ -1,6 +1,6 @@
 {
   "name": "@yuzheng14/vue-session",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simplistic session plugin for VueJS backed by SessionStorage",
   "main": "./dist/lib/index.cjs",
   "module": "./dist/es/index.js",
